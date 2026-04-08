@@ -104643,7 +104643,10 @@ var allowedOrigins = [
   /\.replit\.dev$/,
   /\.replit\.app$/,
   /\.nempocreative\.com$/,
-  "https://nempocreative.com"
+  "https://nempocreative.com",
+  "http://localhost",
+  "http://localhost:80",
+  /^http:\/\/localhost(:\d+)?$/
 ];
 if (process.env["ALLOWED_ORIGIN"]) {
   allowedOrigins.push(process.env["ALLOWED_ORIGIN"]);
