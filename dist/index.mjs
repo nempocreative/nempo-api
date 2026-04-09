@@ -104881,22 +104881,51 @@ startDeletionScheduler().catch((e) => logger.error({ err: e }, "DeletionSchedule
 var app_default = app;
 
 // src/index.ts
-var rawPort = process.env["PORT"];
-if (!rawPort) {
-  throw new Error(
-    "PORT environment variable is required but was not provided."
-  );
-}
+var rawPort = process.env["PORT"] ?? "8080";
 var port = Number(rawPort);
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
-app_default.listen(port, (err) => {
-  if (err) {
-    logger.error({ err }, "Error listening on port");
-    process.exit(1);
+async function runMigrations() {
+  try {
+    await db.execute(sql`
+      CREATE TABLE IF NOT EXISTS store_orders (
+        id SERIAL PRIMARY KEY,
+        order_code VARCHAR(20) NOT NULL UNIQUE,
+        clerk_user_id VARCHAR(255),
+        user_name VARCHAR(255),
+        user_email VARCHAR(255),
+        whatsapp VARCHAR(50) NOT NULL,
+        product_slug VARCHAR(255) NOT NULL,
+        product_name VARCHAR(255) NOT NULL,
+        pricing_type VARCHAR(50) NOT NULL,
+        amount INTEGER NOT NULL,
+        status VARCHAR(50) NOT NULL DEFAULT 'menunggu',
+        payment_status VARCHAR(50) DEFAULT 'pending',
+        payment_method VARCHAR(100),
+        admin_note TEXT,
+        activation_link TEXT,
+        proof_image_url TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `);
+    await db.execute(sql`
+      ALTER TABLE store_orders ADD COLUMN IF NOT EXISTS proof_image_url TEXT
+    `);
+    logger.info("Migrations done");
+  } catch (err) {
+    logger.error({ err }, "Migration failed");
   }
-  logger.info({ port }, "Server listening");
+}
+runMigrations().then(() => {
+  app_default.listen(port, (err) => {
+    if (err) {
+      logger.error({ err }, "Error listening on port");
+      process.exit(1);
+    }
+    logger.info({ port }, "Server listening");
+  });
 });
 /*! Bundled license information:
 
