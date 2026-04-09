@@ -104688,7 +104688,7 @@ router22.post("/store-orders/guest", async (req, res) => {
     res.status(201).json({ orderCode: order.orderCode, id: order.id });
   } catch (err) {
     req.log.error({ err }, "Failed to create store order");
-    res.status(500).json({ error: "Failed to create order" });
+    res.status(500).json({ error: "Failed to create order", detail: err?.message });
   }
 });
 router22.get("/store-orders/track/:code", async (req, res) => {
