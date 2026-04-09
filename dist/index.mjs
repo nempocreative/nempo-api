@@ -104891,28 +104891,30 @@ async function runMigrations() {
     await db.execute(sql`
       CREATE TABLE IF NOT EXISTS store_orders (
         id SERIAL PRIMARY KEY,
-        order_code VARCHAR(20) NOT NULL UNIQUE,
-        clerk_user_id VARCHAR(255),
-        user_name VARCHAR(255),
-        user_email VARCHAR(255),
-        whatsapp VARCHAR(50) NOT NULL,
-        product_slug VARCHAR(255) NOT NULL,
-        product_name VARCHAR(255) NOT NULL,
-        pricing_type VARCHAR(50) NOT NULL,
+        order_code TEXT UNIQUE,
+        clerk_user_id TEXT,
+        user_name TEXT,
+        user_email TEXT,
+        whatsapp TEXT NOT NULL,
+        product_slug TEXT NOT NULL,
+        product_name TEXT NOT NULL,
+        pricing_type TEXT NOT NULL,
         amount INTEGER NOT NULL,
-        status VARCHAR(50) NOT NULL DEFAULT 'menunggu',
-        payment_status VARCHAR(50) DEFAULT 'pending',
-        payment_method VARCHAR(100),
+        status TEXT NOT NULL DEFAULT 'menunggu',
+        payment_status TEXT DEFAULT 'pending',
+        payment_method TEXT,
+        snap_token TEXT,
         admin_note TEXT,
         activation_link TEXT,
         proof_image_url TEXT,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        deleted_at TIMESTAMPTZ
       )
     `);
-    await db.execute(sql`
-      ALTER TABLE store_orders ADD COLUMN IF NOT EXISTS proof_image_url TEXT
-    `);
+    await db.execute(sql`ALTER TABLE store_orders ADD COLUMN IF NOT EXISTS snap_token TEXT`);
+    await db.execute(sql`ALTER TABLE store_orders ADD COLUMN IF NOT EXISTS proof_image_url TEXT`);
+    await db.execute(sql`ALTER TABLE store_orders ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ`);
     logger.info("Migrations done");
   } catch (err) {
     logger.error({ err }, "Migration failed");
