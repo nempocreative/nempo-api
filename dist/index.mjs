@@ -20489,27 +20489,27 @@ var require_router = __commonJS({
     var slice = Array.prototype.slice;
     var flatten = Array.prototype.flat;
     var methods = METHODS.map((method) => method.toLowerCase());
-    module.exports = Router23;
+    module.exports = Router24;
     module.exports.Route = Route;
-    function Router23(options) {
-      if (!(this instanceof Router23)) {
-        return new Router23(options);
+    function Router24(options) {
+      if (!(this instanceof Router24)) {
+        return new Router24(options);
       }
       const opts = options || {};
-      function router23(req, res, next) {
-        router23.handle(req, res, next);
+      function router24(req, res, next) {
+        router24.handle(req, res, next);
       }
-      Object.setPrototypeOf(router23, this);
-      router23.caseSensitive = opts.caseSensitive;
-      router23.mergeParams = opts.mergeParams;
-      router23.params = {};
-      router23.strict = opts.strict;
-      router23.stack = [];
-      return router23;
+      Object.setPrototypeOf(router24, this);
+      router24.caseSensitive = opts.caseSensitive;
+      router24.mergeParams = opts.mergeParams;
+      router24.params = {};
+      router24.strict = opts.strict;
+      router24.stack = [];
+      return router24;
     }
-    Router23.prototype = function() {
+    Router24.prototype = function() {
     };
-    Router23.prototype.param = function param(name, fn) {
+    Router24.prototype.param = function param(name, fn) {
       if (!name) {
         throw new TypeError("argument name is required");
       }
@@ -20529,7 +20529,7 @@ var require_router = __commonJS({
       params.push(fn);
       return this;
     };
-    Router23.prototype.handle = function handle(req, res, callback) {
+    Router24.prototype.handle = function handle(req, res, callback) {
       if (!callback) {
         throw new TypeError("argument callback is required");
       }
@@ -20656,7 +20656,7 @@ var require_router = __commonJS({
         }
       }
     };
-    Router23.prototype.use = function use(handler) {
+    Router24.prototype.use = function use(handler) {
       let offset = 0;
       let path2 = "/";
       if (typeof handler !== "function") {
@@ -20689,7 +20689,7 @@ var require_router = __commonJS({
       }
       return this;
     };
-    Router23.prototype.route = function route(path2) {
+    Router24.prototype.route = function route(path2) {
       const route2 = new Route(path2);
       const layer = new Layer(path2, {
         sensitive: this.caseSensitive,
@@ -20704,7 +20704,7 @@ var require_router = __commonJS({
       return route2;
     };
     methods.concat("all").forEach(function(method) {
-      Router23.prototype[method] = function(path2) {
+      Router24.prototype[method] = function(path2) {
         const route = this.route(path2);
         route[method].apply(route, slice.call(arguments, 1));
         return this;
@@ -20887,13 +20887,13 @@ var require_application = __commonJS({
     var compileTrust = require_utils3().compileTrust;
     var resolve2 = __require("node:path").resolve;
     var once = require_once();
-    var Router23 = require_router();
+    var Router24 = require_router();
     var slice = Array.prototype.slice;
     var flatten = Array.prototype.flat;
     var app2 = exports = module.exports = {};
     var trustProxyDefaultSymbol = "@@symbol:trust_proxy_default";
     app2.init = function init() {
-      var router23 = null;
+      var router24 = null;
       this.cache = /* @__PURE__ */ Object.create(null);
       this.engines = /* @__PURE__ */ Object.create(null);
       this.settings = /* @__PURE__ */ Object.create(null);
@@ -20902,13 +20902,13 @@ var require_application = __commonJS({
         configurable: true,
         enumerable: true,
         get: function getrouter() {
-          if (router23 === null) {
-            router23 = new Router23({
+          if (router24 === null) {
+            router24 = new Router24({
               caseSensitive: this.enabled("case sensitive routing"),
               strict: this.enabled("strict routing")
             });
           }
-          return router23;
+          return router24;
         }
       });
     };
@@ -20979,15 +20979,15 @@ var require_application = __commonJS({
       if (fns.length === 0) {
         throw new TypeError("app.use() requires a middleware function");
       }
-      var router23 = this.router;
+      var router24 = this.router;
       fns.forEach(function(fn2) {
         if (!fn2 || !fn2.handle || !fn2.set) {
-          return router23.use(path2, fn2);
+          return router24.use(path2, fn2);
         }
         debug(".use app under %s", path2);
         fn2.mountpath = path2;
         fn2.parent = this;
-        router23.use(path2, function mounted_app(req, res, next) {
+        router24.use(path2, function mounted_app(req, res, next) {
           var orig = req.app;
           fn2.handle(req, res, function(err) {
             Object.setPrototypeOf(req, orig.request);
@@ -23514,7 +23514,7 @@ var require_express = __commonJS({
     var EventEmitter = __require("node:events").EventEmitter;
     var mixin = require_merge_descriptors();
     var proto = require_application();
-    var Router23 = require_router();
+    var Router24 = require_router();
     var req = require_request();
     var res = require_response();
     exports = module.exports = createApplication;
@@ -23536,8 +23536,8 @@ var require_express = __commonJS({
     exports.application = proto;
     exports.request = req;
     exports.response = res;
-    exports.Route = Router23.Route;
-    exports.Router = Router23;
+    exports.Route = Router24.Route;
+    exports.Router = Router24;
     exports.json = bodyParser.json;
     exports.raw = bodyParser.raw;
     exports.static = require_serve_static();
@@ -34671,11 +34671,11 @@ var require_router2 = __commonJS({
     var debug = debug_1.Debug.extend("router");
     async function getTarget(req, config) {
       let newTarget;
-      const router23 = config.router;
-      if ((0, is_plain_object_1.isPlainObject)(router23)) {
-        newTarget = getTargetFromProxyTable(req, router23);
-      } else if (typeof router23 === "function") {
-        newTarget = await router23(req);
+      const router24 = config.router;
+      if ((0, is_plain_object_1.isPlainObject)(router24)) {
+        newTarget = getTargetFromProxyTable(req, router24);
+      } else if (typeof router24 === "function") {
+        newTarget = await router24(req);
       }
       return newTarget;
     }
@@ -34718,7 +34718,7 @@ var require_http_proxy_middleware = __commonJS({
     var get_plugins_1 = require_get_plugins();
     var path_filter_1 = require_path_filter();
     var PathRewriter = require_path_rewriter();
-    var Router23 = require_router2();
+    var Router24 = require_router2();
     var debug_1 = require_debug2();
     var function_1 = require_function();
     var logger_1 = require_logger2();
@@ -34789,7 +34789,7 @@ var require_http_proxy_middleware = __commonJS({
         this.applyRouter = async (req, options2) => {
           let newTarget;
           if (options2.router) {
-            newTarget = await Router23.getTarget(req, options2);
+            newTarget = await Router24.getTarget(req, options2);
             if (newTarget) {
               (0, debug_1.Debug)('router new target: "%s"', newTarget);
               options2.target = newTarget;
@@ -76555,7 +76555,7 @@ var require_multer = __commonJS({
 });
 
 // src/app.ts
-var import_express29 = __toESM(require_express2(), 1);
+var import_express30 = __toESM(require_express2(), 1);
 var import_cors = __toESM(require_lib3(), 1);
 
 // ../../node_modules/.pnpm/helmet@8.1.0/node_modules/helmet/index.mjs
@@ -86041,7 +86041,7 @@ function clerkProxyMiddleware() {
 }
 
 // src/routes/index.ts
-var import_express28 = __toESM(require_express2(), 1);
+var import_express29 = __toESM(require_express2(), 1);
 
 // src/routes/health.ts
 var import_express = __toESM(require_express2(), 1);
@@ -96901,6 +96901,7 @@ function drizzle(...params) {
 var schema_exports = {};
 __export(schema_exports, {
   ORDER_STATUSES: () => ORDER_STATUSES,
+  STORE_ORDER_STATUSES: () => STORE_ORDER_STATUSES,
   TALENT_STATUSES: () => TALENT_STATUSES,
   accountDeletionRequests: () => accountDeletionRequests,
   demoContent: () => demoContent,
@@ -96911,6 +96912,7 @@ __export(schema_exports, {
   orders: () => orders,
   paymentConfig: () => paymentConfig,
   phoneOtps: () => phoneOtps,
+  storeOrders: () => storeOrders,
   storeProducts: () => storeProducts,
   talentAccounts: () => talentAccounts,
   talentApplications: () => talentApplications,
@@ -97139,6 +97141,34 @@ var storeProducts = pgTable("store_products", {
   orderIndex: integer("order_index").default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+});
+var STORE_ORDER_STATUSES = [
+  "menunggu",
+  "pembayaran_dikonfirmasi",
+  "aktivasi",
+  "selesai"
+];
+var storeOrders = pgTable("store_orders", {
+  id: serial("id").primaryKey(),
+  orderCode: text("order_code").unique(),
+  clerkUserId: text("clerk_user_id"),
+  userName: text("user_name"),
+  userEmail: text("user_email"),
+  whatsapp: text("whatsapp").notNull(),
+  productSlug: text("product_slug").notNull(),
+  productName: text("product_name").notNull(),
+  pricingType: text("pricing_type").notNull(),
+  amount: integer("amount").notNull(),
+  status: text("status").notNull().default("menunggu"),
+  paymentStatus: text("payment_status").default("pending"),
+  paymentMethod: text("payment_method"),
+  snapToken: text("snap_token"),
+  adminNote: text("admin_note"),
+  activationLink: text("activation_link"),
+  proofImageUrl: text("proof_image_url"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  deletedAt: timestamp("deleted_at", { withTimezone: true })
 });
 
 // src/lib/db.ts
@@ -102676,11 +102706,27 @@ router5.post("/payments/token", async (req, res) => {
     if (!orderCode || !grossAmount) {
       return res.status(400).json({ error: "orderCode and grossAmount required" });
     }
-    const [order] = await db.select().from(orders).where(eq(orders.orderCode, orderCode));
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
-    }
+    const isStoreOrder = orderCode.startsWith("TKO-");
     const snap = getSnap();
+    let resolvedItemName = itemName;
+    let resolvedCustomerName = customerName || "Pelanggan";
+    let resolvedEmail = customerEmail || void 0;
+    let resolvedPhone = customerPhone || void 0;
+    if (isStoreOrder) {
+      const [storeOrder] = await db.select().from(storeOrders).where(eq(storeOrders.orderCode, orderCode));
+      if (!storeOrder) return res.status(404).json({ error: "Order not found" });
+      resolvedItemName = itemName || storeOrder.productName;
+      resolvedCustomerName = customerName || storeOrder.userName || "Pelanggan";
+      resolvedEmail = customerEmail || storeOrder.userEmail || void 0;
+      resolvedPhone = customerPhone || storeOrder.whatsapp || void 0;
+    } else {
+      const [order] = await db.select().from(orders).where(eq(orders.orderCode, orderCode));
+      if (!order) return res.status(404).json({ error: "Order not found" });
+      resolvedItemName = itemName || order.serviceName;
+      resolvedCustomerName = customerName || order.userName || "Pelanggan";
+      resolvedEmail = customerEmail || order.userEmail || void 0;
+      resolvedPhone = customerPhone || order.whatsapp || void 0;
+    }
     const parameter = {
       transaction_details: {
         order_id: orderCode,
@@ -102688,24 +102734,28 @@ router5.post("/payments/token", async (req, res) => {
       },
       item_details: [
         {
-          id: order.serviceId,
+          id: orderCode,
           price: Math.round(grossAmount),
           quantity: 1,
-          name: itemName || order.serviceName
+          name: resolvedItemName || "Produk Nempo"
         }
       ],
       customer_details: {
-        first_name: customerName || order.userName || "Pelanggan",
-        email: customerEmail || order.userEmail || void 0,
-        phone: customerPhone || order.whatsapp || void 0
+        first_name: resolvedCustomerName,
+        email: resolvedEmail,
+        phone: resolvedPhone
       },
       callbacks: {
-        finish: `${process.env["VITE_API_URL"] || ""}/order`
+        finish: `${process.env["VITE_API_URL"] || ""}/${isStoreOrder ? "toko" : "order"}`
       }
     };
     const transaction = await snap.createTransaction(parameter);
     const snapToken = transaction.token;
-    await db.update(orders).set({ snapToken, paymentStatus: "pending", updatedAt: /* @__PURE__ */ new Date() }).where(eq(orders.orderCode, orderCode));
+    if (isStoreOrder) {
+      await db.update(storeOrders).set({ snapToken, paymentStatus: "pending", updatedAt: /* @__PURE__ */ new Date() }).where(eq(storeOrders.orderCode, orderCode));
+    } else {
+      await db.update(orders).set({ snapToken, paymentStatus: "pending", updatedAt: /* @__PURE__ */ new Date() }).where(eq(orders.orderCode, orderCode));
+    }
     res.json({ snapToken, redirectUrl: transaction.redirect_url });
   } catch (err) {
     req.log.error({ err }, "Failed to create snap token");
@@ -102727,13 +102777,22 @@ router5.post("/payments/notification", async (req, res) => {
     } else if (transaction_status === "pending") {
       paymentStatus = "pending";
     }
-    const newOrderStatus = paymentStatus === "paid" ? "pemenuhan_data" : void 0;
-    await db.update(orders).set({
-      paymentStatus,
-      paymentMethod: notification.payment_type || void 0,
-      ...newOrderStatus ? { status: newOrderStatus } : {},
-      updatedAt: /* @__PURE__ */ new Date()
-    }).where(eq(orders.orderCode, order_id));
+    if (order_id.startsWith("TKO-")) {
+      await db.update(storeOrders).set({
+        paymentStatus,
+        paymentMethod: notification.payment_type || void 0,
+        ...paymentStatus === "paid" ? { status: "pembayaran_dikonfirmasi" } : {},
+        updatedAt: /* @__PURE__ */ new Date()
+      }).where(eq(storeOrders.orderCode, order_id));
+    } else {
+      const newOrderStatus = paymentStatus === "paid" ? "pemenuhan_data" : void 0;
+      await db.update(orders).set({
+        paymentStatus,
+        paymentMethod: notification.payment_type || void 0,
+        ...newOrderStatus ? { status: newOrderStatus } : {},
+        updatedAt: /* @__PURE__ */ new Date()
+      }).where(eq(orders.orderCode, order_id));
+    }
     req.log.info({ order_id, transaction_status, paymentStatus }, "Payment notification processed");
     res.status(200).json({ status: "ok" });
   } catch (err) {
@@ -104572,30 +104631,162 @@ router21.delete("/admin/store-products/:id", requireAdmin12, async (req, res) =>
 });
 var storeProducts_default = router21;
 
-// src/routes/index.ts
+// src/routes/storeOrders.ts
+var import_express28 = __toESM(require_express2(), 1);
 var router22 = (0, import_express28.Router)();
-router22.use(health_default);
-router22.use(orders_default);
-router22.use(phoneAuth_default);
-router22.use(cafeReceipt_default);
-router22.use(payments_default);
-router22.use(eventRegistrations_default);
-router22.use(storage_default);
-router22.use(trash_default);
-router22.use(users_default);
-router22.use(events_default);
-router22.use(paymentConfig_default);
-router22.use(homeContent_default);
-router22.use(servicesContent_default);
-router22.use(storeContent_default);
-router22.use(portfolioContent_default);
-router22.use(talentApplications_default);
-router22.use(accountDeletion_default);
-router22.use(talentAuth_default);
-router22.use(demoContent_default);
-router22.use(influencers_default);
-router22.use(storeProducts_default);
-var routes_default = router22;
+function generateOrderCode2() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "TKO-";
+  for (let i = 0; i < 6; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
+}
+var requireAdmin13 = (req, res, next) => {
+  const adminKey = process.env["ADMIN_SECRET_KEY"];
+  const provided = req.headers["x-admin-key"];
+  if (!adminKey || provided !== adminKey) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  next();
+};
+router22.post("/store-orders/guest", async (req, res) => {
+  try {
+    const {
+      userName,
+      userEmail,
+      whatsapp,
+      productSlug,
+      productName,
+      pricingType,
+      amount
+    } = req.body;
+    if (!whatsapp || !productSlug || !productName || !pricingType || !amount) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+    let orderCode;
+    let tries = 0;
+    while (true) {
+      orderCode = generateOrderCode2();
+      const existing = await db.select({ id: storeOrders.id }).from(storeOrders).where(eq(storeOrders.orderCode, orderCode));
+      if (existing.length === 0) break;
+      if (++tries > 10) throw new Error("Could not generate unique code");
+    }
+    const [order] = await db.insert(storeOrders).values({
+      orderCode,
+      clerkUserId: null,
+      userName: userName || null,
+      userEmail: userEmail || null,
+      whatsapp,
+      productSlug,
+      productName,
+      pricingType,
+      amount: Number(amount),
+      status: "menunggu",
+      paymentStatus: "pending"
+    }).returning();
+    res.status(201).json({ orderCode: order.orderCode, id: order.id });
+  } catch (err) {
+    req.log.error({ err }, "Failed to create store order");
+    res.status(500).json({ error: "Failed to create order" });
+  }
+});
+router22.get("/store-orders/track/:code", async (req, res) => {
+  try {
+    const { code } = req.params;
+    const [order] = await db.select().from(storeOrders).where(eq(storeOrders.orderCode, code));
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    const { clerkUserId, ...safe } = order;
+    res.json(safe);
+  } catch (err) {
+    req.log.error({ err }, "Failed to fetch store order");
+    res.status(500).json({ error: "Failed to fetch order" });
+  }
+});
+router22.get("/store-orders/admin", requireAdmin13, async (req, res) => {
+  try {
+    const all = await db.select().from(storeOrders).where(isNull(storeOrders.deletedAt)).orderBy(desc(storeOrders.createdAt));
+    res.json(all);
+  } catch (err) {
+    req.log.error({ err }, "Failed to fetch store orders");
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+router22.patch("/store-orders/admin/:id/status", requireAdmin13, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const { status, adminNote, activationLink } = req.body;
+    if (!STORE_ORDER_STATUSES.includes(status)) {
+      return res.status(400).json({ error: "Invalid status", valid: STORE_ORDER_STATUSES });
+    }
+    const updateData = { status, updatedAt: /* @__PURE__ */ new Date() };
+    if (adminNote !== void 0) updateData.adminNote = adminNote;
+    if (activationLink !== void 0) updateData.activationLink = activationLink;
+    const [updated] = await db.update(storeOrders).set(updateData).where(eq(storeOrders.id, id)).returning();
+    if (!updated) return res.status(404).json({ error: "Order not found" });
+    res.json(updated);
+  } catch (err) {
+    req.log.error({ err }, "Failed to update store order status");
+    res.status(500).json({ error: "Failed to update status" });
+  }
+});
+router22.patch("/store-orders/admin/:id/payment", requireAdmin13, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const { paymentStatus, paymentMethod } = req.body;
+    const updateData = { paymentStatus, updatedAt: /* @__PURE__ */ new Date() };
+    if (paymentMethod) updateData.paymentMethod = paymentMethod;
+    if (paymentStatus === "paid") updateData.status = "pembayaran_dikonfirmasi";
+    const [updated] = await db.update(storeOrders).set(updateData).where(eq(storeOrders.id, id)).returning();
+    if (!updated) return res.status(404).json({ error: "Order not found" });
+    res.json(updated);
+  } catch (err) {
+    req.log.error({ err }, "Failed to update store order payment");
+    res.status(500).json({ error: "Failed to update payment" });
+  }
+});
+router22.patch("/store-orders/guest/:orderCode/proof", async (req, res) => {
+  try {
+    const { orderCode } = req.params;
+    const { proofImageUrl, paymentMethod } = req.body;
+    if (!proofImageUrl) return res.status(400).json({ error: "proofImageUrl required" });
+    const updateData = { proofImageUrl, updatedAt: /* @__PURE__ */ new Date() };
+    if (paymentMethod) updateData.paymentMethod = paymentMethod;
+    const [updated] = await db.update(storeOrders).set(updateData).where(eq(storeOrders.orderCode, orderCode)).returning();
+    if (!updated) return res.status(404).json({ error: "Order not found" });
+    res.json({ success: true, orderCode: updated.orderCode });
+  } catch (err) {
+    req.log.error({ err }, "Failed to update store order proof");
+    res.status(500).json({ error: "Gagal menyimpan bukti" });
+  }
+});
+var storeOrders_default = router22;
+
+// src/routes/index.ts
+var router23 = (0, import_express29.Router)();
+router23.use(health_default);
+router23.use(orders_default);
+router23.use(phoneAuth_default);
+router23.use(cafeReceipt_default);
+router23.use(payments_default);
+router23.use(eventRegistrations_default);
+router23.use(storage_default);
+router23.use(trash_default);
+router23.use(users_default);
+router23.use(events_default);
+router23.use(paymentConfig_default);
+router23.use(homeContent_default);
+router23.use(servicesContent_default);
+router23.use(storeContent_default);
+router23.use(portfolioContent_default);
+router23.use(talentApplications_default);
+router23.use(accountDeletion_default);
+router23.use(talentAuth_default);
+router23.use(demoContent_default);
+router23.use(influencers_default);
+router23.use(storeProducts_default);
+router23.use(storeOrders_default);
+var routes_default = router23;
 
 // src/lib/logger.ts
 var import_pino = __toESM(require_pino(), 1);
@@ -104616,7 +104807,7 @@ var logger = (0, import_pino.default)({
 });
 
 // src/app.ts
-var app = (0, import_express29.default)();
+var app = (0, import_express30.default)();
 app.set("trust proxy", 1);
 app.use(
   (0, import_pino_http.default)({
@@ -104664,8 +104855,8 @@ app.use(
     }
   })
 );
-app.use(import_express29.default.json());
-app.use(import_express29.default.urlencoded({ extended: true }));
+app.use(import_express30.default.json());
+app.use(import_express30.default.urlencoded({ extended: true }));
 app.use(clerkMiddleware());
 var adminRateLimit = rate_limit_default({
   windowMs: 15 * 60 * 1e3,
